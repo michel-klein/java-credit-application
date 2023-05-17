@@ -1,15 +1,17 @@
 package michel.klein.requestcreditsystem.dto
 
+import jakarta.validation.constraints.Future
+import jakarta.validation.constraints.NotNull
 import michel.klein.requestcreditsystem.entity.Credit
 import michel.klein.requestcreditsystem.entity.Customer
 import java.math.BigDecimal
 import java.time.LocalDate
 
 data class CreditDto(
-    val creditValue: BigDecimal,
-    val dayFirstInstallment: LocalDate,
+    @field:NotNull(message = "Input cannot be empty") val creditValue: BigDecimal,
+    @field:Future val dayFirstInstallment: LocalDate,
     val numberOfInstallments: Int,
-    val customerId: Long
+    @field:NotNull(message = "Input cannot be empty") val customerId: Long
 ) {
     fun toEntity(): Credit = Credit(
         creditValue = this.creditValue,

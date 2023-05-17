@@ -1,21 +1,28 @@
 package michel.klein.requestcreditsystem.dto
 
+import jakarta.validation.constraints.Email
+import jakarta.validation.constraints.NotEmpty
+import jakarta.validation.constraints.NotNull
 import michel.klein.requestcreditsystem.entity.Address
 import michel.klein.requestcreditsystem.entity.Customer
+import org.hibernate.validator.constraints.br.CPF
 import java.math.BigDecimal
 
 data class CustomerDto (
-    val firstName: String,
-    val lastName: String,
+    @field:NotEmpty(message = "Input cannot be empty") val firstName: String,
+    @field:NotEmpty(message = "Input cannot be empty") val lastName: String,
+    @field:NotEmpty(message = "Input cannot be empty")
+    @field:CPF(message = "Invalid CPF")
     val cpf: String,
-    val income: BigDecimal,
-    val email: String,
-    val password: String,
-    val zipCode: String,
-    val street: String
+    @field:NotNull(message = "Input cannot be empty") val income: BigDecimal,
+    @field:NotEmpty(message = "Input cannot be empty")
+    @field:Email(message = "Invalid email") val email: String,
+    @field:NotEmpty(message = "Input cannot be empty") val password: String,
+    @field:NotEmpty(message = "Input cannot be empty") val zipCode: String,
+    @field:NotEmpty(message = "Input cannot be empty") val street: String
 ) {
     fun toEntity(): Customer = Customer(
-        firstName = this.firstName,
+        this.firstName,
         lastName = this.lastName,
         cpf = this.cpf,
         income = this.income,
